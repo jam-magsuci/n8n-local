@@ -1,1 +1,3 @@
 .env*
+n8n_storage/
+db_storage/
