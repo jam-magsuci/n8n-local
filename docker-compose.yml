@@ -2,12 +2,8 @@ services:
   postgres:
     image: postgres:16
     restart: always
-    environment:
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_DB
-      - POSTGRES_NON_ROOT_USER
-      - POSTGRES_NON_ROOT_PASSWORD
+    env_file:
+      - .env
     volumes:
       - ./db_storage:/var/lib/postgresql/data
       - ./init-data.sh:/docker-entrypoint-initdb.d/init-data.sh
@@ -20,15 +16,10 @@ services:
   n8n:
     image: docker.n8n.io/n8nio/n8n
     restart: always
-    environment:
-      - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_HOST=postgres
-      - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
-      - DB_POSTGRESDB_USER=${POSTGRES_NON_ROOT_USER}
-      - DB_POSTGRESDB_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
+    env_file:
+      - .env
     ports:
-      - 5678:5678
+      - ${N8N_PORT}:5678
     links:
       - postgres
     volumes:
