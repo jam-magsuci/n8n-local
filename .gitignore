@@ -1,4 +1,4 @@
-.env*
+.env
 n8n_storage/
 db_storage/
 site_status.log
