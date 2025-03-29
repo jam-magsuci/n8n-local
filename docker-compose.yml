@@ -12,6 +12,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - localnet
 
   n8n:
     image: docker.n8n.io/n8nio/n8n
@@ -27,3 +29,11 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - localnet
+
+
+networks:
+  localnet:
+    external: true
+
